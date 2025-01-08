@@ -1,0 +1,100 @@
+/* Modern CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f6f8fd 0%, #f1f4f9 100%);
+}
+
+.container {
+    text-align: center;
+    background-color: white;
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    width: 90%;
+    max-width: 480px;
+}
+
+h1 {
+    color: #2d3748;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.timer {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #4a5568;
+    font-variant-numeric: tabular-nums;
+    margin: 2rem 0;
+    font-feature-settings: "tnum";
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.controls button {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#start {
+    background-color: #1877F2;
+    color: white;
+}
+
+#start:hover {
+    background-color: #1664D9;
+}
+
+#start:disabled {
+    background-color: #9CC0F1;
+    cursor: not-allowed;
+}
+
+#reset {
+    background-color: #E7F0FF;
+    color: #1877F2;
+}
+
+#reset:hover {
+    background-color: #D8E6FD;
+}
+
+#mode-toggle {
+    background-color: #E7F0FF;
+    color: #1877F2;
+}
+
+#mode-toggle:hover {
+    background-color: #D8E6FD;
+}
+
+.status {
+    margin-top: 1.5rem;
+}
+
+#status-text {
+    color: #6B7280;
+    font-size: 1.1rem;
+    font-weight: 500;
+} 
