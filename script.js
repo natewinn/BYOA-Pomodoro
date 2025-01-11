@@ -10,6 +10,11 @@ const resetButton = document.getElementById('reset');
 const statusText = document.getElementById('status-text');
 const modeToggle = document.getElementById('mode-toggle');
 const pauseButton = document.getElementById('pause');
+const modal = document.getElementById('focus-modal');
+const focusForm = document.getElementById('focus-form');
+const focusInput = document.getElementById('focus-input');
+const focusDisplay = document.getElementById('focus-display');
+const addTimeButton = document.getElementById('add-time');
 
 function updateTimer() {
     const minutes = Math.floor(timeLeft / 60);
@@ -46,6 +51,11 @@ function updateModeDisplay() {
 
 function startTimer() {
     if (timerId === null) {
+        if (isWorkTime && !focusDisplay.textContent) {
+            showFocusModal();
+            return;
+        }
+        
         if (!timeLeft) {
             timeLeft = isWorkTime ? 25 * 60 : 5 * 60;
         }
@@ -61,12 +71,14 @@ function startTimer() {
                 alert(isWorkTime ? 'Break is over! Time to work!' : 'Work session complete! Take a break!');
                 startButton.disabled = false;
                 pauseButton.disabled = true;
+                addTimeButton.disabled = true;
                 startButton.textContent = isWorkTime ? 'Start Work' : 'Start Break';
             }
         }, 1000);
         
         startButton.disabled = true;
         pauseButton.disabled = false;
+        addTimeButton.disabled = false;
         isPaused = false;
     }
 }
@@ -92,24 +104,48 @@ function resetTimer() {
     updateTimer();
     startButton.disabled = false;
     pauseButton.disabled = true;
+    addTimeButton.disabled = true;
     startButton.textContent = isWorkTime ? 'Start Work' : 'Start Break';
     pauseButton.textContent = 'Pause';
+    focusDisplay.textContent = '';
+    focusDisplay.style.display = 'none';
 }
 
 function switchMode() {
     isWorkTime = !isWorkTime;
     timeLeft = isWorkTime ? 25 * 60 : 5 * 60;
-    
-    if (isWorkTime) {
-        minutesDisplay.textContent = "25";
-    } else {
-        minutesDisplay.textContent = "05";
-    }
-    secondsDisplay.textContent = "00";
-    
+    focusDisplay.textContent = '';
+    focusDisplay.style.display = 'none';
     updateModeDisplay();
     updateTimer();
 }
+
+function showFocusModal() {
+    modal.style.display = 'flex';
+    focusInput.focus();
+}
+
+function hideFocusModal() {
+    modal.style.display = 'none';
+}
+
+focusForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const focusText = focusInput.value.trim();
+    if (focusText) {
+        focusDisplay.textContent = focusText;
+        focusDisplay.style.display = 'block';
+        hideFocusModal();
+        focusInput.value = '';
+        startTimer();
+    }
+});
+
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        hideFocusModal();
+    }
+});
 
 // Event Listeners
 startButton.addEventListener('click', startTimer);
@@ -139,8 +175,16 @@ modeToggle.addEventListener('change', (e) => {
     }
 });
 
+function addFiveMinutes() {
+    timeLeft += 5 * 60;
+    updateTimer();
+}
+
+addTimeButton.addEventListener('click', addFiveMinutes);
+
 // Initialize
 updateModeDisplay();
 timeLeft = 25 * 60;
 updateTimer();
-pauseButton.disabled = true; 
+pauseButton.disabled = true;
+addTimeButton.disabled = true; 

@@ -19,9 +19,13 @@
         <div class="timer">
             <span id="minutes">25</span>:<span id="seconds">00</span>
         </div>
+        <div id="focus-display" class="focus-display">
+            <!-- Focus text will be inserted here -->
+        </div>
         <div class="controls">
             <button id="start">Start Work</button>
             <button id="pause" disabled>Pause</button>
+            <button id="add-time" disabled>+5 Min</button>
         </div>
         <div class="mode-switch">
             <span class="mode-label" data-mode="work">Work</span>
@@ -30,6 +34,15 @@
                 <span class="slider"></span>
             </label>
             <span class="mode-label" data-mode="break">Break</span>
+        </div>
+    </div>
+    <div id="focus-modal" class="modal">
+        <div class="modal-content">
+            <h2>What are you focusing on?</h2>
+            <form id="focus-form">
+                <input type="text" id="focus-input" placeholder="Enter your focus..." maxlength="50" required>
+                <button type="submit">Start Focusing</button>
+            </form>
         </div>
     </div>
     <script src="script.js"></script>
