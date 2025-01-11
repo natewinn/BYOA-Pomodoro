@@ -1,13 +1,14 @@
 let timeLeft;
 let timerId = null;
 let isWorkTime = true;
+let isPaused = false;
 
 const minutesDisplay = document.getElementById('minutes');
 const secondsDisplay = document.getElementById('seconds');
 const startButton = document.getElementById('start');
 const resetButton = document.getElementById('reset');
 const statusText = document.getElementById('status-text');
-const modeToggleButton = document.getElementById('mode-toggle');
+const pauseButton = document.getElementById('pause');
 
 function updateTimer() {
     const minutes = Math.floor(timeLeft / 60);
@@ -23,19 +24,18 @@ function updateTimer() {
 function switchMode() {
     isWorkTime = !isWorkTime;
     timeLeft = isWorkTime ? 25 * 60 : 5 * 60;
-    statusText.textContent = isWorkTime 
-        ? 'Time to focus \u{1F913}'  // 🤓
-        : 'Time for a break \u{1F973}';  // 🥳
-    modeToggleButton.textContent = isWorkTime ? 'Break' : 'Work';
+    statusText.textContent = isWorkTime ? 'Time to focus \u{1F913}' : 'Time for a break \u{1F973}';
     startButton.textContent = isWorkTime ? 'Start Work' : 'Start Break';
+    document.getElementById('mode-toggle').checked = !isWorkTime;
     updateTimer();
 }
 
 function startTimer() {
     if (timerId === null) {
         if (!timeLeft) {
-            timeLeft = 25 * 60;
+            timeLeft = isWorkTime ? 25 * 60 : 5 * 60;
         }
+        
         timerId = setInterval(() => {
             timeLeft--;
             updateTimer();
@@ -45,34 +45,54 @@ function startTimer() {
                 timerId = null;
                 switchMode();
                 alert(isWorkTime ? 'Break is over! Time to work!' : 'Work session complete! Take a break!');
+                startButton.disabled = false;
+                pauseButton.disabled = true;
+                startButton.textContent = isWorkTime ? 'Start Work' : 'Start Break';
             }
         }, 1000);
+        
         startButton.disabled = true;
+        pauseButton.disabled = false;
+        isPaused = false;
+    }
+}
+
+function pauseTimer() {
+    if (!isPaused) {
+        // Pause the timer
+        clearInterval(timerId);
+        timerId = null;
+        isPaused = true;
+        pauseButton.textContent = 'Resume';
+    } else {
+        // Resume the timer
+        startTimer();
+        pauseButton.textContent = 'Pause';
+        isPaused = false;
     }
 }
 
 function resetTimer() {
     clearInterval(timerId);
     timerId = null;
+    isPaused = false;
     timeLeft = isWorkTime ? 25 * 60 : 5 * 60;
     updateTimer();
     startButton.disabled = false;
+    pauseButton.disabled = true;
+    startButton.textContent = isWorkTime ? 'Start Work' : 'Start Break';
+    pauseButton.textContent = 'Pause';
 }
 
-// Event Listeners
+// Add event listeners
+pauseButton.addEventListener('click', pauseTimer);
 startButton.addEventListener('click', startTimer);
 resetButton.addEventListener('click', resetTimer);
-modeToggleButton.addEventListener('click', () => {
-    clearInterval(timerId);
-    timerId = null;
-    startButton.disabled = false;
-    switchMode();
-});
 
-// Initialize the timer
-resetTimer();
-startButton.textContent = 'Start Work';  // Set initial text 
-statusText.textContent = 'Time to focus 🤓';  // Set initial status text 
+// Initialize button states
+pauseButton.disabled = true;
+document.title = '25:00 - Focus Timer';
 
-// Set initial title
-document.title = '25:00 - Focus Timer'; 
+// Initialize timeLeft when the page loads
+timeLeft = 25 * 60;  // Start with 25 minutes
+updateTimer();  // Update the display immediately 

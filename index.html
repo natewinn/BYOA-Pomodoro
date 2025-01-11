@@ -14,9 +14,17 @@
             <span id="minutes">25</span>:<span id="seconds">00</span>
         </div>
         <div class="controls">
-            <button id="start">Start Focus</button>
+            <button id="start">Start Work</button>
+            <button id="pause" disabled>Pause</button>
             <button id="reset">Reset</button>
-            <button id="mode-toggle">Break</button>
+        </div>
+        <div class="mode-switch">
+            <span class="mode-label">Work</span>
+            <label class="toggle">
+                <input type="checkbox" id="mode-toggle">
+                <span class="slider"></span>
+            </label>
+            <span class="mode-label">Break</span>
         </div>
         <div class="status">
             <p id="status-text">Time to focus 🤓</p>
