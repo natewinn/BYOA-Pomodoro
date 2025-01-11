@@ -15,6 +15,7 @@ body {
 }
 
 .container {
+    position: relative;
     text-align: center;
     background-color: white;
     padding: 3rem;
@@ -25,10 +26,11 @@ body {
 }
 
 h1 {
+    margin: 0;
     color: #2d3748;
     font-size: 1.75rem;
     font-weight: 700;
-    margin-bottom: 2rem;
+    text-align: center;
 }
 
 .timer {
@@ -170,4 +172,34 @@ input:checked + .slider:before {
     background-color: #F0F0F0;
     color: #999;
     cursor: not-allowed;
+}
+
+.timer-header {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.icon-button {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1877F2;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+.icon-button:hover {
+    background-color: #E7F0FF;
+}
+
+.icon-button .material-icons {
+    font-size: 24px;
 } 
