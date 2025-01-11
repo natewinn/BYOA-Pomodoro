@@ -111,7 +111,14 @@ h1 {
 
 .mode-label {
     font-weight: 500;
+    color: #CBD5E1;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.mode-label.active {
     color: #1877F2;
+    font-weight: 600;
 }
 
 .toggle {
@@ -134,7 +141,7 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #E7F0FF;
+    background-color: #1877F2;
     transition: .4s;
     border-radius: 34px;
 }
@@ -149,10 +156,7 @@ h1 {
     background-color: white;
     transition: .4s;
     border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #1877F2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 input:checked + .slider:before {
@@ -202,4 +206,9 @@ input:checked + .slider:before {
 
 .icon-button .material-icons {
     font-size: 24px;
+}
+
+/* Add hover effect to the toggle */
+.toggle:hover .slider {
+    opacity: 0.9;
 } 
